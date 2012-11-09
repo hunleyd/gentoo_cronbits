@@ -4,23 +4,21 @@ gentoo_cronbits
 Various Gentoo-related scripts for cron-based housekeeping
 
 The scripts are:
-+cron.daily:
-++clean_distfiles - clean out the distfiles and packages dirs
-++depclean - remove packages that are no longer needed
-++eix_sync - synchronize our Portage tree to the master
-++emaint_check - check for and peform routine maintenance
-++emerge_check - check if there are any packaged to install/upgrade/downgrade
-++emerge_tweet - alert the sys admin about the packages to be installed/upgraded/downgraded
-++emerge_world - install/upgrade/downgrade our local packages
-++enable_bash_completions - enable any available Bash tab completions
-++get_news - report if there is any Gentoo news available
-++glsa_check - check for outstanding security alerts on this system
-++preserved_rebuild - correct issues created by upgrading shared libraries
-++profile_check - check for new Gentoo profiles
-++sort_portage_sets - sort our Portage sets files
++clean_distfiles - clean out the distfiles and packages dirs
++depclean - remove packages that are no longer needed
++eix_sync - synchronize our Portage tree to the master
++emaint_check - check for and peform routine maintenance
++emerge_check - check if there are any packaged to install/upgrade/downgrade
++emerge_tweet - alert the sys admin about the packages to be installed/upgraded/downgraded
++emerge_world - install/upgrade/downgrade our local packages
++enable_bash_completions - enable any available Bash tab completions
++get_news - report if there is any Gentoo news available
++glsa_check - check for outstanding security alerts on this system
++preserved_rebuild - correct issues created by upgrading shared libraries
++profile_check - check for new Gentoo profiles
++sort_portage_sets - sort our Portage sets files
 <br>
-+cron.weekly:
-++eix_obsolete - ensure we have no stale USE flags
++eix_obsolete - ensure we have no stale USE flags
 
 Usage
 -----
