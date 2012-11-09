@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Run a test depclean to see what would be removed
+emerge --depclean --pretend \
+  --columns \
+  --color n \
+  --nospinner \
+  --unordered-display \
+  --quiet > /tmp/depclean.out
+
+# If there is anything to be removed, continue
+if [ -s /tmp/depclean.out ] ; then
+    grep 'none ' /tmp/depclean.out | while read line
+    do
+        package=`echo "$line" | cut -d: -f1`
+        version=`echo "$line" | awk '{print $2}'`
+
+        # Send notice that we're removing the package"
+        echo "Uninstalling $package $version" | mail 5555551212@vtext.com
+      sleep 30
+    done
+
+    # Actually unmerge the packages
+    emerge --depclean &>/dev/null
+fi

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Sync our Portage tree to get the latest updates
+/usr/bin/eix-sync -q

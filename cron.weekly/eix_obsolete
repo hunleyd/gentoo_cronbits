@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Check for and report on any obsolete settings in our CFLAGS, USE flags, or the
+# general Portage environment
+REDUNDANT_IF_IN_CFLAGS="-some" \
+REDUNDANT_IF_IN_ENV="-some" \
+REDUNDANT_IF_IN_USE="-some" \
+REDUNDANT_IF_DOUBLE_CFLAGS="some" \
+REDUNDANT_IF_DOUBLE_ENV="some" \
+REDUNDANT_IF_DOUBLE_USE="some" \
+REDUNDANT_IF_STRANGE="-some" \
+/usr/bin/eix-test-obsolete -C | mail -s "eix-test-obsolete output" doug

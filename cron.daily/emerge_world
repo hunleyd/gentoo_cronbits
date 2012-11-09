@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Check if there is anything for emerge to do
+if [ ! -s /tmp/emerge.out ] ; then
+    exit 0
+fi
+
+# Actually do the emerge
+emerge \
+  --quiet \
+  --update \
+  --newuse \
+  --deep \
+  --with-bdeps y \
+  --keep-going \
+  @world &>/dev/null

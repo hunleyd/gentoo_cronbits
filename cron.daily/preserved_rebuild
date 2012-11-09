@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Since we use Portage 2.2.x, we can fix all those packages that are broken
+# by library upgrades simply by calling emerge again as below
+emerge --quiet @preserved-rebuild &>/dev/null

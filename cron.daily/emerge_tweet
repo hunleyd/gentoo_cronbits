@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Are there updates to be emerged?
+if [ ! -s /tmp/emerge.out ] ; then
+    exit 0
+fi
+
+# Did Portage determine an issue with the pending emerge?
+grep -q '*' /tmp/emerge.out
+if [ $? -eq 0 ] ; then
+  # Yes, so tell the sys admin
+  echo "Problem with automatic emerge" | mail 5555551212@vtext.com
+  exit 0
+fi
+
+# Check for a different class of issues with the pending merge
+grep -q '!' /tmp/emerge.out
+if [ $? -eq 0 ] ; then
+  # and tell the sys admin about it
+  echo "Problem with automatic emerge" | mail 5555551212@vtext.com
+  exit 0
+fi
+
+# Is there a pending upgrade of KDE?
+grep -q kde-meta /tmp/emerge.out
+if [ $? -eq 0 ] ; then
+    # Yes, so remove all the packages from the list except kde-meta
+	grep -v kde-base /tmp/emerge.out > /tmp/emerge.out2
+	grep kde-meta /tmp/emerge.out >> /tmp/emerge.out2
+	mv /tmp/emerge.out2 /tmp/emerge.out
+fi
+
+# Now, we send an alert to the sys admin about each package we are going
+# to install, upgrade, or downgrade
+while read line
+do
+  action=`echo "$line" | awk '{print $1}'`
+  num_fields=`echo "$line" | awk '{print NF}'`
+
+  if [ $num_fields -eq 3 -o $num_fields -eq 4 ] ; then
+	package=`echo "$line" | awk '{print $2}'`
+	version=`echo "$line" | awk '{print $3}'`
+	old_version=`echo "$line" | awk '{print $4}' | tr -d \[,\]`
+  elif [ $num_fields -eq 5 ] ; then
+	package=`echo "$line" | awk '{print $3}'`
+	version=`echo "$line" | awk '{print $4}'`
+	old_version=`echo "$line" | awk '{print $5}' | tr -d \[,\]`
+  else
+    echo "Unhandled number of fields: $num_fields"
+    echo "Line was: $line"
+  fi
+
+  case $action in
+    N*)
+      action="Installing"
+      verb=
+      verb2=
+      old_version=
+      ;;
+    U)
+      action="Upgrading"
+      verb=to
+      verb2=from
+      ;;
+    UD)
+      action='Downgrading'
+      verb=to
+      verb2=from
+      ;;
+    R)
+      action='Replacing'
+      verb=
+      verb2=
+      ;;
+  esac
+
+  # send the alert about this package
+  echo "$action $package $verb $version $verb2 $old_version" | mail 5555551212@vtext.com
+  # sleep for a bit, so we're not DOSing anyone's phone
+  sleep 30
+done < /tmp/emerge.out

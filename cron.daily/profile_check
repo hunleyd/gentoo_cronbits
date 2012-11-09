@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+
+# Check if our stored listing of the available profiles is present
+if [ -e /var/cache/profile.lst ] ; then
+  # list the profiles available today
+  eselect profile list > /tmp/profile.lst
+  # diff that list against our stored list
+  diff /var/cache/profile.lst /tmp/profile.lst &>/tmp/profiles.diff
+  if [ $? -ne 0 ] ; then
+    # and email the differences to the sys admin
+    cat /tmp/profiles.diff | mail -s "New Gentoo profiles" doug
+    # and overwrite the stored list for tomorrow's run
+    mv /tmp/profile.lst /var/cache
+    rm /tmp/profiles.diff
+  else
+    # no differences, so remove the new list
+    rm /tmp/profile.lst
+  fi
+else
+  # no stored list found, so create one
+  eselect profile list > /var/cache/profile.lst
+fi

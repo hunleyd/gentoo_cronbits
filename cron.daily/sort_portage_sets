@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# We actually don't have *anything* in our world file as we use
+# Portage 2.2.x and have moved everything into a set of its own,
+# and we like to have the set files sorted for easier browsing
+for i in /etc/portage/sets/*
+do
+    sort $i > /tmp/foo
+    cat /tmp/foo > $i
+done

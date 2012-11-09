@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Copyright Douglas J Hunley 2012
+
+# Call emaint and have it fix everything it can
+/usr/sbin/emaint --fix all &>/dev/null
