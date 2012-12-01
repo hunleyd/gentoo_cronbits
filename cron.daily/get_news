@@ -5,5 +5,5 @@
 # Check for new Gentoo news and mail it to the sys admin
 news_count=`/usr/bin/eselect news count`
 if [ $news_count -gt 0 ] ; then
-  /usr/bin/eselect --no-color news list | mail -s "emerge news for `hostname`" doug
+    /usr/bin/eselect --no-color news list | mail -s "emerge news for $(hostname)" doug
 fi

@@ -2,7 +2,7 @@
 
 # Copyright Douglas J Hunley 2012
 
-# Clean out the packages directory 
+# Clean out the packages directory
 /usr/bin/eclean -C packages | mail -s "eclean packages output" root
 # Clean out the distfiles directory of anything > 1 week old
 /usr/bin/eclean -C -d -t1w distfiles | mail -s "eclean distfiles output" root
