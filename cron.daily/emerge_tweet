@@ -25,11 +25,12 @@ if [ $? -eq 0 ] ; then
 	mv /tmp/emerge.out2 /tmp/emerge.out
 fi
 
+cat /tmp/emerge.out | tr ' ' '|' > /tmp/emerge.out2
 while read line
 do
-  action=`echo "$line" | cut -c1-6 | tr -d ' '`
-  package=`echo "$line" | cut -c7- | awk '{print $1}'`
-  version=`echo "$line" | cut -c7- | awk '{print $2}'`
+  action=`echo "$line" | cut -c1-6 | tr -d '|'`
+  package=`echo "$line" | cut -c8- | tr '|' ' ' | awk '{print $1}'`
+  version=`echo "$line" | cut -c8- | tr '|' ' ' | awk '{print $2}'`
 
   case $action in
     N*)
@@ -50,6 +51,8 @@ do
       ;;
   esac
 
+  #echo "a->$action p->$package v->$verb n->$version"
   /home/doug/bin/cron_tweet "$action $package $verb $version"
   sleep 30
-done < /tmp/emerge.out
+done < /tmp/emerge.out2
+rm /tmp/emerge.out2
