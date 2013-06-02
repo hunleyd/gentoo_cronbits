@@ -28,10 +28,27 @@ fi
 cat /tmp/emerge.out | tr ' ' '|' > /tmp/emerge.out2
 while read line
 do
-  action=`echo "$line" | cut -c1-6 | tr -d '|'`
+  action=`echo "$line" | cut -c1-6 | tr -d '|' | tr -d '[a-z]'`
   package=`echo "$line" | cut -c8- | tr '|' ' ' | awk '{print $1}'`
   version=`echo "$line" | cut -c8- | tr '|' ' ' | awk '{print $2}'`
 
+  # According to 'man emerge' the actions can include:
+  # N   new (not yet installed)
+  # S   new SLOT installation (side-by-side versions)
+  # U   updating (to another version)
+  # D   downgrading (best version seems lower)
+  # r   reinstall (forced for some reason, possibly due to slot or sub-slot)
+  # R   replacing (remerging same version)
+  # F   fetch restricted (must be manually downloaded)
+  # f   fetch restricted (already downloaded)
+  # I   interactive (requires user input)
+  # B   blocked by another package (unresolved conflict)
+  # b   blocked by another package (automatically resolved conflict)
+
+  # We handle 'F' and 'B' and 'I' above where we bail out
+  # We don't really care about 'b' since it is resolved for us
+  # We don't care about 'f' either since we apparently already handled it
+  # I've never seen 'r' by itself. It always comes with 'R' or 'U', so we discard it
   case $action in
     N*)
       action="Installing"
@@ -45,7 +62,7 @@ do
       action='Downgrading'
       verb=to
       ;;
-    R|rR|r)
+    R)
       action='Replacing'
       verb=
       ;;
