@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright Douglas J Hunley 2012
+# Copyright Douglas J Hunley 2013
 
 # Run a test emerge of @world to see if there are updates and record the same for later
 /usr/bin/emerge --update --pretend \

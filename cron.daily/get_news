@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright Douglas J Hunley 2012
+# Copyright Douglas J Hunley 2013
 
 # Check for new Gentoo news and mail it to the sys admin
 news_count=`/usr/bin/eselect news count`

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright Douglas J Hunley 2012
+# Copyright Douglas J Hunley 2013
 
 # Run glsa-check for any outstanding security issues pertinent to the machine
 # and notify the admin

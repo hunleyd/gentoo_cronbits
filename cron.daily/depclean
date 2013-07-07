@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright Douglas J Hunley 2012
+# Copyright Douglas J Hunley 2013
 
 # Run a test depclean to see what would be removed
 emerge --depclean --pretend \

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright Douglas J Hunley 2012
+# Copyright Douglas J Hunley 2013
 
 # Clean out the packages directory
 /usr/bin/eclean -C packages | mail -s "eclean packages output" root
