@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# list any deamons using old versions of files so we know to restart them
+/usr/sbin/checkrestart | mail -s "Daemons that need restarted" doug
